@@ -11,11 +11,11 @@ A PHP framework agnostic component to detect the running OS name, version and fa
 Start a new `Detector` instance and get the running OS
 
 ```php
-use NuWHM\OS\Detector;
+use NuWHM\Component\OS\Detector;
 
 $detector = new Detector();
 
-$system = $detector->getSystem(); // Instance of NuWHM\OS\System\SystemInterface
+$system = $detector->getSystem(); // Instance of NuWHM\Component\OS\System\SystemInterface
 ```
 
 Each OS instance class can (and should) extend a parent OS class if it is a derivative.
@@ -23,8 +23,8 @@ Each OS instance class can (and should) extend a parent OS class if it is a deri
 For example, you can detect if the running system is Ubuntu by checking the instance of the class:
 
 ```php
-use NuWHM\OS\Detector;
-use NuWHM\OS\System\Ubuntu;
+use NuWHM\Component\OS\Detector;
+use NuWHM\Component\OS\System\Ubuntu;
 
 $detector = new Detector();
 
@@ -37,9 +37,9 @@ At the same time, you can check if you are running a Debian based OS, even if it
 This can be very useful if you want to check between major Linux distributions:
 
 ```php
-use NuWHM\OS\Detector;
-use NuWHM\OS\System\Debian;
-use NuWHM\OS\System\Fedora;
+use NuWHM\Component\OS\Detector;
+use NuWHM\Component\OS\System\Debian;
+use NuWHM\Component\OS\System\Fedora;
 
 $detector = new Detector();
 $system = $detector->getSystem();
@@ -53,7 +53,7 @@ if ($system instanceof Debian) {
 
 Another way to detect the operating system is to instantiate directly the OS class:
 ```php
-use NuWHM\OS\System\Ubuntu;
+use NuWHM\Component\OS\System\Ubuntu;
 
 $ubuntu = new Ubuntu();
 
@@ -68,11 +68,11 @@ If you need to add a new detector for an obscure case, OS, or cannot wait for a 
 more detectors when instantiating the `Detector` class:
 
 ```php
-use NuWHM\OS\Detector;
+use NuWHM\Component\OS\Detector;
 
 $detector = new Detector([
     \MyNamespace\OS\ObscureOS::class,
-    // You can add detectors as you want if they all implements NuWHM\OS\System\SystemInterface
+    // You can add detectors as you want if they all implements NuWHM\Component\OS\System\SystemInterface
 ]);
 
 ```
@@ -84,7 +84,7 @@ Implement `SystemInterface` if the OS is not a derivated distribution...
 
 namespace MyNamespace\OS;
 
-use NuWHM\OS\System\SystemInterface;
+use NuWHM\Component\OS\System\SystemInterface;
  
 class ObscureOS implements SystemInterface
 {
@@ -102,7 +102,7 @@ class ObscureOS implements SystemInterface
 
 namespace MyNamespace\OS;
 
-use NuWHM\OS\System\Linux;
+use NuWHM\Component\OS\System\Linux;
  
 class ObscureOS extends Linux
 {
