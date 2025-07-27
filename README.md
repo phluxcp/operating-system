@@ -1,6 +1,6 @@
-# Phlux/operating-system
+# phluxcp/operating-system
 
-A PHP framework agnostic component to detect the running OS name, version and family.
+A PHP framework-agnostic component to detect the running OS name, version and family.
 
 > [!WARNING]
 > This package is in early development stage and is not ready for production use. It is not tested yet, so use it at your own risk.
