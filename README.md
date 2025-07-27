@@ -1,6 +1,6 @@
-# phluxcp/operating-system
+<p align="center"><img src="https://github.com/phluxcp/art/blob/main/logo.svg" alt="Phlux Control Panel logo"></p>
 
-<center>![Phlux Control Panel logo](https://raw.githubusercontent.com/phluxcp/art/refs/heads/main/logo.svg?token=GHSAT0AAAAAADARXGFGB3JVZ25F4C37CN5U2EGV46Q)</center>
+# phluxcp/operating-system
 
 A PHP framework-agnostic component to detect the running OS name, version and family.
 
@@ -58,29 +58,21 @@ if ($system instanceof Debian) {
 }
 ```
 
-Another way to detect the operating system is to instantiate directly the OS class:
-```php
-use Phlux\Component\OperatingSystem\System\Ubuntu;
-
-$ubuntu = new Ubuntu();
-
-if ($ubuntu->isRunningOS()){
-    // Do something if running Ubuntu	
-}
-```
-
 ## Adding new detectors
 
 If you need to add a new detector for an obscure case, OS, or cannot wait for a pull request to get merged you can add 
 more detectors when instantiating the `Detector` class:
 
 ```php
-use Phlux\Component\OperatingSystem\Detector;
+use Phlux\Component\OperatingSystem;
 
-$detector = new Detector([
-    \MyNamespace\OperatingSystem\ObscureOS::class,
-    // You can add detectors as you want if they all implements Phlux\Component\OperatingSystem\System\SystemInterface
-]);
+$detector = new OperatingSystem\Detector(
+    new OperatingSystem\Filesystem\Amp,
+    [
+        \MyNamespace\OperatingSystem\ObscureOS::class,
+        // You can add detectors as you want if they all implements Phlux\Component\OperatingSystem\System\SystemInterface
+    ],
+);
 
 ```
 
@@ -93,7 +85,7 @@ class ObscureOS implements SystemInterface
 {
     public function isRunningOS(): bool
     {
-        // Detection logic
+        // Your detection and build logic
     }
 }
 ```
@@ -107,7 +99,7 @@ class ObscureOS extends Linux
 {
     public function isRunningOS(): bool
     {
-        // Your detection logic
+        // Your detection and build logic
     }
 }
 ```
