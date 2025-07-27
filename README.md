@@ -1,5 +1,7 @@
 # phluxcp/operating-system
 
+<center>![Phlux Control Panel logo](https://raw.githubusercontent.com/phluxcp/art/refs/heads/main/logo.svg?token=GHSAT0AAAAAADARXGFGB3JVZ25F4C37CN5U2EGV46Q)</center>
+
 A PHP framework-agnostic component to detect the running OS name, version and family.
 
 > [!WARNING]
