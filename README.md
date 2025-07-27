@@ -1,21 +1,26 @@
-# NuWHM/OS
+# Phlux/operating-system
 
 A PHP framework agnostic component to detect the running OS name, version and family.
 
+> [!WARNING]
+> This package is in early development stage and is not ready for production use. It is not tested yet, so use it at your own risk.
+
 ## Installation
 
-`composer require nuwhm/os`
+```shell
+composer require phluxcp/operating-system
+```
 
 ## Usage
 
 Start a new `Detector` instance and get the running OS
 
 ```php
-use NuWHM\Component\OS\Detector;
+use Phlux\Component\OperatingSystem\Detector;
 
 $detector = new Detector();
 
-$system = $detector->getSystem(); // Instance of NuWHM\Component\OS\System\SystemInterface
+$system = $detector->getSystem(); // Instance of Phlux\Component\OperatingSystem\System\SystemInterface
 ```
 
 Each OS instance class can (and should) extend a parent OS class if it is a derivative.
@@ -23,8 +28,8 @@ Each OS instance class can (and should) extend a parent OS class if it is a deri
 For example, you can detect if the running system is Ubuntu by checking the instance of the class:
 
 ```php
-use NuWHM\Component\OS\Detector;
-use NuWHM\Component\OS\System\Ubuntu;
+use Phlux\Component\OperatingSystem\Detector;
+use Phlux\Component\OperatingSystem\System\Ubuntu;
 
 $detector = new Detector();
 
@@ -37,9 +42,9 @@ At the same time, you can check if you are running a Debian based OS, even if it
 This can be very useful if you want to check between major Linux distributions:
 
 ```php
-use NuWHM\Component\OS\Detector;
-use NuWHM\Component\OS\System\Debian;
-use NuWHM\Component\OS\System\Fedora;
+use Phlux\Component\OperatingSystem\Detector;
+use Phlux\Component\OperatingSystem\System\Debian;
+use Phlux\Component\OperatingSystem\System\Fedora;
 
 $detector = new Detector();
 $system = $detector->getSystem();
@@ -53,7 +58,7 @@ if ($system instanceof Debian) {
 
 Another way to detect the operating system is to instantiate directly the OS class:
 ```php
-use NuWHM\Component\OS\System\Ubuntu;
+use Phlux\Component\OperatingSystem\System\Ubuntu;
 
 $ubuntu = new Ubuntu();
 
@@ -68,11 +73,11 @@ If you need to add a new detector for an obscure case, OS, or cannot wait for a 
 more detectors when instantiating the `Detector` class:
 
 ```php
-use NuWHM\Component\OS\Detector;
+use Phlux\Component\OperatingSystem\Detector;
 
 $detector = new Detector([
-    \MyNamespace\OS\ObscureOS::class,
-    // You can add detectors as you want if they all implements NuWHM\Component\OS\System\SystemInterface
+    \MyNamespace\OperatingSystem\ObscureOS::class,
+    // You can add detectors as you want if they all implements Phlux\Component\OperatingSystem\System\SystemInterface
 ]);
 
 ```
@@ -80,11 +85,7 @@ $detector = new Detector([
 Implement `SystemInterface` if the OS is not a derivated distribution...
 
 ```php
-// src/OS/ObscureOS.php
-
-namespace MyNamespace\OS;
-
-use NuWHM\Component\OS\System\SystemInterface;
+use Phlux\Component\OperatingSystem\System\SystemInterface;
  
 class ObscureOS implements SystemInterface
 {
@@ -98,12 +99,8 @@ class ObscureOS implements SystemInterface
 ...or just extend another OS
 
 ```php
-// src/OS/ObscureOS.php
+use Phlux\Component\OperatingSystem\System\Linux;
 
-namespace MyNamespace\OS;
-
-use NuWHM\Component\OS\System\Linux;
- 
 class ObscureOS extends Linux
 {
     public function isRunningOS(): bool
