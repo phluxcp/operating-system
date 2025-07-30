@@ -1,16 +1,20 @@
 {
     "name": "phluxcp/operating-system",
-    "description": "An async PHP component to detect the running OS name, version and family.",
+    "description": "A PHP component to detect the running OS name, version and family.",
     "type": "library",
     "require-dev": {
         "phpstan/phpstan": "^2.1",
-        "phpunit/phpunit": "^12.2"
+        "phpunit/phpunit": "^12.2",
+        "monolog/monolog": "^3.9"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
             "Phlux\\Component\\OperatingSystem\\": "src/"
-        }
+        },
+        "files": [
+          "functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -25,6 +29,11 @@
     ],
     "require": {
         "php": "^8.4",
-        "phpunit/php-invoker": "^6.0"
-    }
+        "phpunit/php-invoker": "^6.0",
+        "amphp/file": "^3.2",
+        "psr/log": "^3.0"
+    },
+    "bin": [
+        "bin/operating-system"
+    ]
 }

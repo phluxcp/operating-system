@@ -1,0 +1,12 @@
+#!/bin/php
+<?php
+
+declare(strict_types=1);
+
+use Phlux\Component\OperatingSystem\System;
+
+require dirname( __DIR__).'/vendor/autoload.php';
+
+$os = Phlux\Component\OperatingSystem\detect();
+
+echo 'Operating System: '.$os->toString().PHP_EOL;

@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/phluxcp/art/blob/main/logo.svg" alt="Phlux Control Panel logo"></p>
+<p align="center"><img src="https://github.com/phluxcp/art/blob/main/logo.svg" alt="Phlux Control Panel logo" title="Phlux"></p>
 
 # phluxcp/operating-system
 
@@ -15,14 +15,9 @@ composer require phluxcp/operating-system
 
 ## Usage
 
-Start a new `Detector` instance and get the running OS
-
 ```php
-use Phlux\Component\OperatingSystem\Detector;
-
-$detector = new Detector();
-
-$system = $detector->getSystem(); // Instance of Phlux\Component\OperatingSystem\System\SystemInterface
+// Instance of Phlux\Component\OperatingSystem\System\SystemInterface
+$system = Phlux\Component\OperatingSystem\detect();
 ```
 
 Each OS instance class can (and should) extend a parent OS class if it is a derivative.
@@ -30,13 +25,10 @@ Each OS instance class can (and should) extend a parent OS class if it is a deri
 For example, you can detect if the running system is Ubuntu by checking the instance of the class:
 
 ```php
-use Phlux\Component\OperatingSystem\Detector;
-use Phlux\Component\OperatingSystem\System\Ubuntu;
+use Phlux\Component\OperatingSystem;
 
-$detector = new Detector();
-
-$system = $detector->getSystem(); // Ubuntu instance
-$system instanceof Ubuntu; // true
+$system = OperatingSystem\detect(); // Ubuntu instance
+$system instanceof OperatingSystem\System\Ubuntu; // true
 ```
 
 At the same time, you can check if you are running a Debian based OS, even if it is a derivated OS.
@@ -44,16 +36,14 @@ At the same time, you can check if you are running a Debian based OS, even if it
 This can be very useful if you want to check between major Linux distributions:
 
 ```php
-use Phlux\Component\OperatingSystem\Detector;
-use Phlux\Component\OperatingSystem\System\Debian;
-use Phlux\Component\OperatingSystem\System\Fedora;
 
-$detector = new Detector();
-$system = $detector->getSystem();
+use Phlux\Component\OperatingSystem;
 
-if ($system instanceof Debian) {
+$system = OperatingSystem\detect(); // Ubuntu instance
+
+if ($system instanceof OperatingSystem\System\Debian) {
     // Do something if OS is Debian, Ubuntu, LMDE, Elementary...
-} elseif ($system instanceof Fedora) {
+} elseif ($system instanceof OperatingSystem\System\Fedora) {
     // Do something if OS is Fedora, RHEL, CentOS...
 }
 ```
@@ -66,13 +56,31 @@ more detectors when instantiating the `Detector` class:
 ```php
 use Phlux\Component\OperatingSystem;
 
+// Create a new detector instance with custom detectors...
+
 $detector = new OperatingSystem\Detector(
-    new OperatingSystem\Filesystem\Amp,
+    new OperatingSystem\Filesystem\Amp(),
     [
         \MyNamespace\OperatingSystem\ObscureOS::class,
         // You can add detectors as you want if they all implements Phlux\Component\OperatingSystem\System\SystemInterface
     ],
 );
+
+// ...or add to the default detectors from the constructor...
+
+$detector = new OperatingSystem\Detector(
+    new OperatingSystem\Filesystem\Amp(),
+    [
+        ...OperatingSystem\Detector::DEFAULT_DETECTORS, // Include default detectors
+        \MyNamespace\OperatingSystem\ObscureOS::class,
+        // You can add detectors as you want if they all implements Phlux\Component\OperatingSystem\System\SystemInterface
+    ],
+);
+
+// ...or add them later
+
+$detector = new OperatingSystem\Detector(new OperatingSystem\Filesystem\Amp());
+$detector->addSystem(\MyNamespace\OperatingSystem\ObscureOS::class);
 
 ```
 
@@ -83,23 +91,17 @@ use Phlux\Component\OperatingSystem\System\SystemInterface;
  
 class ObscureOS implements SystemInterface
 {
-    public function isRunningOS(): bool
-    {
-        // Your detection and build logic
-    }
+    // ...
 }
 ```
 
 ...or just extend another OS
 
 ```php
-use Phlux\Component\OperatingSystem\System\Linux;
+use Phlux\Component\OperatingSystem\System\Debian;
 
-class ObscureOS extends Linux
+class ObscureOS extends Debian
 {
-    public function isRunningOS(): bool
-    {
-        // Your detection and build logic
-    }
+    // ...
 }
 ```
