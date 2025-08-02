@@ -22,8 +22,7 @@ final class Detector
     public function __construct(
         private Filesystem\FilesystemInterface $filesystem,
         private array $systems = self::SYSTEMS_BUILTIN,
-    ) {
-    }
+    ) {}
 
     /**
      * @param class-string<System\SystemInterface> $system
@@ -57,7 +56,7 @@ final class Detector
         }
 
         throw new Exception\NotDetectedException(
-            'No compatible operating system detected. Please ensure you are running a supported system.'
+            'No compatible operating system detected. Please ensure you are running a supported system.',
         );
     }
 }

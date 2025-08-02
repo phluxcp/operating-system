@@ -14,8 +14,7 @@ readonly class Ubuntu extends Debian
         string $debianVersion,
         public string $ubuntuVersion,
         public string $codename,
-    )
-    {
+    ) {
         parent::__construct($debianVersion);
     }
 
@@ -31,9 +30,11 @@ readonly class Ubuntu extends Debian
         $filesystem->exists(self::ETC_DEBIAN_VERSION_PATH) ||
             throw Exception\IncompatibleOperatingSystemException::fromSystem(
                 self::class,
-                sprintf('Could not find "%s" file, which is required for Ubuntu systems.', self::ETC_DEBIAN_VERSION_PATH),
+                sprintf(
+                    'Could not find "%s" file, which is required for Ubuntu systems.',
+                    self::ETC_DEBIAN_VERSION_PATH,
+                ),
             );
-
 
         $lsbRelease = Internal\parse_ini_string($filesystem->read('/etc/lsb-release'));
 
@@ -42,12 +43,18 @@ readonly class Ubuntu extends Debian
             ubuntuVersion: $lsbRelease[self::LSB_RELEASE_KEY_DISTRIB_RELEASE] ??
                 throw Exception\IncompatibleOperatingSystemException::fromSystem(
                     self::class,
-                    sprintf('Could not find "%s" file, which is required for Ubuntu systems.', self::LSB_RELEASE_KEY_DISTRIB_RELEASE),
+                    sprintf(
+                        'Could not find "%s" file, which is required for Ubuntu systems.',
+                        self::LSB_RELEASE_KEY_DISTRIB_RELEASE,
+                    ),
                 ),
             codename: $lsbRelease['DISTRIB_CODENAME'] ??
                 throw Exception\IncompatibleOperatingSystemException::fromSystem(
                     self::class,
-                    sprintf('Could not find "DISTRIB_CODENAME" key in "%s" file, which is required for Ubuntu systems.', self::OS_RELEASE_FILE),
+                    sprintf(
+                        'Could not find "DISTRIB_CODENAME" key in "%s" file, which is required for Ubuntu systems.',
+                        self::OS_RELEASE_FILE,
+                    ),
                 ),
         );
     }

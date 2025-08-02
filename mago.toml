@@ -1,0 +1,5 @@
+[source]
+paths = ["src", "tests"]
+
+[linter]
+plugins = ["php-unit"]

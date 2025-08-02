@@ -7,5 +7,6 @@ namespace Phlux\Component\OperatingSystem\Filesystem;
 interface FilesystemInterface
 {
     public function exists(string $path): bool;
+
     public function read(string $path): string;
 }

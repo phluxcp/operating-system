@@ -32,6 +32,9 @@ final class DetectorTest extends Framework\TestCase
         $detector->addSystem(OperatingSystem\System\Ubuntu::class);
         $detector->addSystem(OperatingSystem\System\Windows::class);
 
-        $this->assertSame([OperatingSystem\System\Ubuntu::class, OperatingSystem\System\Windows::class], $detector->getSystems());
+        $this->assertSame(
+            [OperatingSystem\System\Ubuntu::class, OperatingSystem\System\Windows::class],
+            $detector->getSystems(),
+        );
     }
 }

@@ -24,20 +24,17 @@ readonly class Debian extends AbstractUnixLikeSystem
     public static function buildFromEnvironment(FilesystemInterface $filesystem): self
     {
         // TODO: no confiar en este archivo
-        $filesystem->exists('' . self::ETC_DEBIAN_VERSION_PATH . '') || throw Exception\IncompatibleOperatingSystemException::fromSystem(self::class);
+        $filesystem->exists('' . self::ETC_DEBIAN_VERSION_PATH . '') ||
+            throw Exception\IncompatibleOperatingSystemException::fromSystem(self::class);
 
         $version = $filesystem->read(self::ETC_DEBIAN_VERSION_PATH);
 
-        return new self(
-            debianVersion: trim($version),
-        );
+        return new self(debianVersion: trim($version));
     }
 
     public function __construct(
         public string $debianVersion,
-    )
-    {
-    }
+    ) {}
 
     public function toString(): string
     {

@@ -6,7 +6,7 @@ namespace Phlux\Component\OperatingSystem\System;
 
 use Phlux\Component\OperatingSystem\Kernel;
 
-readonly abstract class AbstractUnixLikeSystem implements SystemInterface
+abstract readonly class AbstractUnixLikeSystem implements SystemInterface
 {
     public const OS_RELEASE_FILE = '/etc/os-release';
 }

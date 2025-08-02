@@ -10,10 +10,10 @@ use Phlux\Component\OperatingSystem\Kernel;
 interface SystemInterface
 {
     public static function getIdentifier(): string;
+
     public static function getKernel(): Kernel;
 
     public static function buildFromEnvironment(FilesystemInterface $filesystem): self;
-
 
     public function toString(): string;
 }

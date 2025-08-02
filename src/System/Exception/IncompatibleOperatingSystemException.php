@@ -9,7 +9,7 @@ use Phlux\Component\OperatingSystem\System\SystemInterface;
 
 final class IncompatibleOperatingSystemException extends RuntimeException
 {
-    private function __construct(string $message, ?\Throwable $previous = null)
+    private function __construct(string $message, null|\Throwable $previous = null)
     {
         parent::__construct($message, 0, $previous);
     }
@@ -18,8 +18,11 @@ final class IncompatibleOperatingSystemException extends RuntimeException
      * @param class-string<SystemInterface> $systemClass
      * @param non-empty-string|null $details
      */
-    public static function fromSystem(string $systemClass, ?string $details = null, ?\Throwable $previous = null): self
-    {
+    public static function fromSystem(
+        string $systemClass,
+        null|string $details = null,
+        null|\Throwable $previous = null,
+    ): self {
         if ($details !== null) {
             $details = ' ' . $details;
         } else {
@@ -28,9 +31,9 @@ final class IncompatibleOperatingSystemException extends RuntimeException
 
         return new self(
             sprintf(
-                'The system "%s" is not compatible with the current operating system.',
-                $systemClass::getIdentifier()
-            ).$details,
+                    'The system "%s" is not compatible with the current operating system.',
+                    $systemClass::getIdentifier(),
+                ) . $details,
             $previous,
         );
     }

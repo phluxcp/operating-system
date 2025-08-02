@@ -24,8 +24,7 @@ readonly class MacOS implements SystemInterface
         throw Exception\IncompatibleOperatingSystemException::fromSystem(self::class, 'MacOS is not supported yet');
     }
 
-    public function __construct(
-    )
+    public function __construct()
     {
         throw new \RuntimeException('Not implemented yet');
     }

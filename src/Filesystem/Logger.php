@@ -11,9 +11,8 @@ final class Logger implements FilesystemInterface
 {
     public function __construct(
         private FilesystemInterface $filesystem,
-        private LoggerInterface $logger
-    ) {
-    }
+        private LoggerInterface $logger,
+    ) {}
 
     public function exists(string $path): bool
     {
