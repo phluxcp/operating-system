@@ -1,0 +1,36 @@
+NAME="ExampleOS"
+ID=exampleos
+ID_LIKE=linux example
+PRETTY_NAME="Example Operating System"
+CPE_NAME="cpe:/o:example:exampleos:1.0"
+VARIANT="Example Desktop"
+VARIANT_ID=example-desktop
+
+VERSION="2.5 (Aurora)"
+VERSION_ID="2.5"
+VERSION_CODENAME="aurora"
+BUILD_ID="20250801"
+IMAGE_ID="aurora-image"
+IMAGE_VERSION="2025.08.01"
+RELEASE_TYPE="development"
+
+HOME_URL="https://www.ficticiosystem.org/"
+DOCUMENTATION_URL="https://docs.ficticiosystem.org/"
+SUPPORT_URL="https://support.ficticiosystem.org/"
+BUG_REPORT_URL="https://bugs.ficticiosystem.org/"
+PRIVACY_POLICY_URL="https://privacy.ficticiosystem.org/"
+SUPPORT_END="2027-12-31"
+LOGO="ficticiosystem-logo"
+ANSI_COLOR="0;36"
+VENDOR_NAME="Ficticio Corp"
+VENDOR_URL="https://www.ficticiocorp.com/"
+EXPERIMENT="beta-ui"
+EXPERIMENT_URL="https://beta.ficticiosystem.org/"
+
+DEFAULT_HOSTNAME="ficticiosystem"
+ARCHITECTURE="x86_64"
+SYSEXT_LEVEL="2"
+CONFEXT_LEVEL="1"
+SYSEXT_SCOPE="system vendor"
+CONFEXT_SCOPE="user"
+PORTABLE_PREFIXES="/usr /opt /home"
