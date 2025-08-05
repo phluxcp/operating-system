@@ -7,7 +7,7 @@ namespace Phlux\Component\OperatingSystem\System;
 use Phlux\Component\OperatingSystem\System\SystemInterface;
 
 /**
- * @phpstan-sealed Debian|Ubuntu|MacOS|Windows
+ * @phpstan-sealed Debian|Ubuntu|Fedora|CentOS
  */
 interface BuiltinSystemInterface extends SystemInterface
 {

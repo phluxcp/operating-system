@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Phlux\Component\OperatingSystem\System;
 
 use Phlux\Component\OperatingSystem\Filesystem\FilesystemInterface;
+use Phlux\Component\OperatingSystem\System\Internal\OsRelease\Exception\OsReleaseFileNotFoundException;
 
 readonly class Ubuntu extends Debian
 {
@@ -13,6 +14,9 @@ readonly class Ubuntu extends Debian
         return 'ubuntu';
     }
 
+    /**
+     * @throws OsReleaseFileNotFoundException
+     */
     public static function buildFromEnvironment(FilesystemInterface $filesystem): self
     {
         $parser = new Internal\OsRelease\Parser($filesystem);

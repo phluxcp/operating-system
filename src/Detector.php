@@ -7,13 +7,11 @@ namespace Phlux\Component\OperatingSystem;
 final class Detector
 {
     /**
-     * @var list<class-string<System\SystemInterface>>
+     * @var list<class-string<System\BuiltinSystemInterface>>
      */
     public const array SYSTEMS_BUILTIN = [
-        System\MacOS::class,
         System\Ubuntu::class,
         System\Debian::class,
-        System\Windows::class,
     ];
 
     /**

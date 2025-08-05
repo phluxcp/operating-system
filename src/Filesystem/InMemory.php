@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Phlux\Component\OperatingSystem\Filesystem;
 
+use Phlux\Component\OperatingSystem\Exception\RuntimeException;
+
 final class InMemory implements FilesystemInterface
 {
     /**
@@ -21,7 +23,7 @@ final class InMemory implements FilesystemInterface
     public function read(string $path): string
     {
         if (!$this->exists($path)) {
-            throw new \RuntimeException("File not found: $path");
+            throw new RuntimeException("File not found: $path");
         }
 
         return $this->files[$path];

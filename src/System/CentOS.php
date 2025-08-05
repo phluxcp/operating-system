@@ -7,11 +7,11 @@ namespace Phlux\Component\OperatingSystem\System;
 use Phlux\Component\OperatingSystem\Filesystem\FilesystemInterface;
 use Phlux\Component\OperatingSystem\Kernel;
 
-readonly class Debian implements BuiltinSystemInterface, OsReleaseInterface
+readonly class CentOS implements BuiltinSystemInterface, OsReleaseInterface
 {
     public static function getIdentifier(): string
     {
-        return 'debian';
+        return 'centos';
     }
 
     public static function getKernel(): Kernel
@@ -34,7 +34,7 @@ readonly class Debian implements BuiltinSystemInterface, OsReleaseInterface
 
     public function toString(): string
     {
-        return 'Debian ' . $this->osReleaseData->version->version;
+        return 'CentOS ' . $this->osReleaseData->version->version;
     }
 
     public function getOsRelease(): Internal\OsRelease\Data

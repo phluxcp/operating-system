@@ -62,8 +62,8 @@ final class Parser
     }
 
     /**
-     * @param array<string, scalar>  $content
-     * @param non-empty-string $key
+     * @param array<string, scalar> $content
+     * @param non-empty-string      $key
      *
      * @return non-empty-string|null
      */
@@ -83,17 +83,14 @@ final class Parser
     }
 
     /**
-     * @param array<string, string> $content
+     * @param array<string, scalar> $content
      */
     private function buildIdentity(array $content): Data\Identity
     {
         return new Data\Identity(
             name: $this->getValue($content, Keys::NAME->value) ?? 'Linux',
             id: $this->getValue($content, Keys::ID->value) ?? 'linux',
-            idLike: array_values(\array_filter(
-                \explode(' ', $this->getValue($content, Keys::ID_LIKE->value) ?? ''),
-                static fn(string $id) => \trim($id) !== '',
-            )),
+            idLike: $this->split($this->getValue($content, Keys::ID_LIKE->value) ?? ''),
             prettyName: $this->getValue($content, Keys::PRETTY_NAME->value) ?? 'Linux',
             cpeName: $this->getValue($content, Keys::CPE_NAME->value),
             variant: $this->getValue($content, Keys::VARIANT->value),
@@ -102,7 +99,7 @@ final class Parser
     }
 
     /**
-     * @param array<string, string> $content
+     * @param array<string, scalar> $content
      */
     public function buildVersion(array $content): Data\Version
     {
@@ -128,7 +125,7 @@ final class Parser
     }
 
     /**
-     * @param array<string, string> $content
+     * @param array<string, scalar> $content
      */
     public function buildPresentation(array $content): Data\Presentation
     {
@@ -149,18 +146,34 @@ final class Parser
     }
 
     /**
-     * @param array<string, string> $content
+     * @param array<string, scalar> $content
      */
     public function buildDistributionDefaults(array $content): Data\DistributionDefaults
     {
         return new Data\DistributionDefaults(
-            defaultHostname: $this->getValue($content, Keys::DEFAULT_HOSTNAME->value ?? ''),
-            architecture: $this->getValue($content, Keys::ARCHITECTURE->value ?? ''),
-            sysextLevel: $this->getValue($content, Keys::SYSEXT_LEVEL->value ?? ''),
-            confextLevel: $this->getValue($content, Keys::CONFEXT_LEVEL->value ?? ''),
-            sysextScope: isset($content[Keys::SYSEXT_SCOPE->value]) ? array_values(array_filter(explode(' ', $this->getValue($content, Keys::SYSEXT_SCOPE->value) ?? ''))) : [],
-            confextScope: isset($content[Keys::CONFEXT_SCOPE->value]) ? array_values(array_filter(explode(' ', $this->getValue($content, Keys::CONFEXT_SCOPE->value) ?? ''))) : [],
-            portablePrefixes: isset($content[Keys::PORTABLE_PREFIXES->value]) ? array_values(array_filter(explode(' ', $this->getValue($content, Keys::PORTABLE_PREFIXES->value) ?? ''))) : [],
+            defaultHostname: $this->getValue($content, Keys::DEFAULT_HOSTNAME->value),
+            architecture: $this->getValue($content, Keys::ARCHITECTURE->value),
+            sysextLevel: $this->getValue($content, Keys::SYSEXT_LEVEL->value),
+            confextLevel: $this->getValue($content, Keys::CONFEXT_LEVEL->value),
+            sysextScope: $this->split($this->getValue($content, Keys::SYSEXT_SCOPE->value) ?? ''),
+            confextScope: $this->split($this->getValue($content, Keys::CONFEXT_SCOPE->value) ?? ''),
+            portablePrefixes: $this->split($this->getValue($content, Keys::PORTABLE_PREFIXES->value) ?? ''),
         );
+    }
+
+    /**
+     * @param string $value
+     * @param non-empty-string $separator
+     *
+     * @return list<non-empty-string>
+     */
+    private function split(string $value, string $separator = ' '): array
+    {
+        $result = \explode($separator, $value);
+        $result = array_map(static fn(string $id) => \trim($id), $result);
+        $result = \array_filter($result, static fn(string $id) => $id !== '');
+        $result = array_values($result);
+
+        return $result;
     }
 }
