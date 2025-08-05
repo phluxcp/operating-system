@@ -43,6 +43,9 @@ final class Detector
         return $this->systems;
     }
 
+    /**
+     * @throws Exception\NotDetectedException
+     */
     public function detect(): System\SystemInterface
     {
         foreach ($this->systems as $system) {

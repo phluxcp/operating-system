@@ -12,6 +12,9 @@ enum Kernel: string
     case Darwin = 'darwin';
     case Windows = 'windows';
 
+    /**
+     * @throws Exception\NotDetectedException
+     */
     public static function buildFromEnvironment(): self
     {
         if (File\exists('/System/Library/CoreServices/SystemVersion.plist')) {

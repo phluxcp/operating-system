@@ -9,6 +9,7 @@ use Psr\Log\NullLogger;
 
 /**
  * @codeCoverageIgnore
+ * @throws Exception\NotDetectedException
  */
 function detect(LoggerInterface $logger = new NullLogger()): System\SystemInterface
 {
