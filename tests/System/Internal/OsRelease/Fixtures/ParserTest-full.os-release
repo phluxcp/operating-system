@@ -34,3 +34,7 @@ CONFEXT_LEVEL="1"
 SYSEXT_SCOPE="system vendor"
 CONFEXT_SCOPE="user"
 PORTABLE_PREFIXES="/usr /opt /home"
+
+EXTRA_FIELD="This is an extra field for testing purposes"
+INVENTED_FIELD="This field is invented and should not be parsed"
+EMPTY_INVENTED_FIELD=""

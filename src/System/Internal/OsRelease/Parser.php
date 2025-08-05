@@ -38,7 +38,7 @@ final class Parser
             $this->buildVersion($content),
             $this->buildPresentation($content),
             $this->buildDistributionDefaults($content),
-            new Data\Extra(),
+            $this->buildExtra($content),
         );
     }
 
@@ -80,6 +80,22 @@ final class Parser
         }
 
         return $name;
+    }
+
+    /**
+     * @param string $value
+     * @param non-empty-string $separator
+     *
+     * @return list<non-empty-string>
+     */
+    private function split(string $value, string $separator = ' '): array
+    {
+        $result = \explode($separator, $value);
+        $result = \array_map(static fn(string $id) => \trim($id), $result);
+        $result = \array_filter($result, static fn(string $id) => $id !== '');
+        $result = \array_values($result);
+
+        return $result;
     }
 
     /**
@@ -162,18 +178,26 @@ final class Parser
     }
 
     /**
-     * @param string $value
-     * @param non-empty-string $separator
-     *
-     * @return list<non-empty-string>
+     * @param array<string, scalar> $content
      */
-    private function split(string $value, string $separator = ' '): array
+    public function buildExtra(array $content): Data\Extra
     {
-        $result = \explode($separator, $value);
-        $result = array_map(static fn(string $id) => \trim($id), $result);
-        $result = \array_filter($result, static fn(string $id) => $id !== '');
-        $result = array_values($result);
+        $values = [];
 
-        return $result;
+        foreach ($content as $key => $value) {
+            if (null !== Keys::tryFrom($key)) {
+                continue;
+            }
+
+            $processedValue = $this->getValue($content, $key);
+
+            if ($processedValue === null) {
+                continue;
+            }
+
+            $values[$key] = $processedValue;
+        }
+
+        return new Data\Extra($values);
     }
 }

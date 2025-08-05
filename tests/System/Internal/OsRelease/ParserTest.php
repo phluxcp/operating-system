@@ -48,44 +48,53 @@ final class ParserTest extends TestCase
 
         $filesystem = new Filesystem\Logger($filesystem, $this->getLogger());
 
-        $osRelease = new OsRelease\Data(new OsRelease\Data\Identity(
-            name: 'ExampleOS',
-            id: 'exampleos',
-            idLike: ['linux', 'example'],
-            prettyName: 'Example Operating System',
-            cpeName: 'cpe:/o:example:exampleos:1.0',
-            variant: 'Example Desktop',
-            variantId: 'example-desktop',
-        ), new OsRelease\Data\Version(
-            version: '2.5 (Aurora)',
-            versionId: '2.5',
-            versionCodename: 'aurora',
-            buildId: '20250801',
-            imageId: 'aurora-image',
-            imageVersion: '2025.08.01',
-            releaseType: 'development',
-        ), new OsRelease\Data\Presentation(
-            homeUrl: 'https://www.ficticiosystem.org/',
-            documentationUrl: 'https://docs.ficticiosystem.org/',
-            supportUrl: 'https://support.ficticiosystem.org/',
-            bugReportUrl: 'https://bugs.ficticiosystem.org/',
-            privacyPolicyUrl: 'https://privacy.ficticiosystem.org/',
-            supportEnd: '2027-12-31',
-            logo: 'ficticiosystem-logo',
-            ansiColor: '0;36',
-            vendorName: 'Ficticio Corp',
-            vendorUrl: 'https://www.ficticiocorp.com/',
-            experiment: 'beta-ui',
-            experimentUrl: 'https://beta.ficticiosystem.org/',
-        ), new OsRelease\Data\DistributionDefaults(
-            defaultHostname: 'ficticiosystem',
-            architecture: 'x86_64',
-            sysextLevel: '2',
-            confextLevel: '1',
-            sysextScope: ['system', 'vendor'],
-            confextScope: ['user'],
-            portablePrefixes: ['/usr', '/opt', '/home'],
-        ), new OsRelease\Data\Extra());
+        $osRelease = new OsRelease\Data(
+            new OsRelease\Data\Identity(
+                name: 'ExampleOS',
+                id: 'exampleos',
+                idLike: ['linux', 'example'],
+                prettyName: 'Example Operating System',
+                cpeName: 'cpe:/o:example:exampleos:1.0',
+                variant: 'Example Desktop',
+                variantId: 'example-desktop',
+            ),
+            new OsRelease\Data\Version(
+                version: '2.5 (Aurora)',
+                versionId: '2.5',
+                versionCodename: 'aurora',
+                buildId: '20250801',
+                imageId: 'aurora-image',
+                imageVersion: '2025.08.01',
+                releaseType: 'development',
+            ),
+            new OsRelease\Data\Presentation(
+                homeUrl: 'https://www.ficticiosystem.org/',
+                documentationUrl: 'https://docs.ficticiosystem.org/',
+                supportUrl: 'https://support.ficticiosystem.org/',
+                bugReportUrl: 'https://bugs.ficticiosystem.org/',
+                privacyPolicyUrl: 'https://privacy.ficticiosystem.org/',
+                supportEnd: '2027-12-31',
+                logo: 'ficticiosystem-logo',
+                ansiColor: '0;36',
+                vendorName: 'Ficticio Corp',
+                vendorUrl: 'https://www.ficticiocorp.com/',
+                experiment: 'beta-ui',
+                experimentUrl: 'https://beta.ficticiosystem.org/',
+            ),
+            new OsRelease\Data\DistributionDefaults(
+                defaultHostname: 'ficticiosystem',
+                architecture: 'x86_64',
+                sysextLevel: '2',
+                confextLevel: '1',
+                sysextScope: ['system', 'vendor'],
+                confextScope: ['user'],
+                portablePrefixes: ['/usr', '/opt', '/home'],
+            ),
+            new OsRelease\Data\Extra([
+                'EXTRA_FIELD' => 'This is an extra field for testing purposes',
+                'INVENTED_FIELD' => 'This field is invented and should not be parsed',
+            ]),
+        );
 
         $this->assertEquals($osRelease, new OsRelease\Parser($filesystem)->parse());
     }
